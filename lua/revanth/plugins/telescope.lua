@@ -5,6 +5,9 @@ return {
   config = function()
     local telescope = require("telescope")
     local builtin = require("telescope.builtin")
+    local open_with_trouble = require("trouble.sources.telescope").open
+
+    local add_to_trouble = require("trouble.sources.telescope").add
     
     local keymap = vim.keymap
 
@@ -13,6 +16,13 @@ return {
     keymap.set("n", "<leader>fo", builtin.oldfiles, { desc = "List previously open files" })
     keymap.set("n", "<leader>fg", builtin.grep_string, { desc = "Search for string under cursor" })
     
-    telescope.setup()
+    telescope.setup({
+      defaults = {
+        mappings = {
+          i = { ["<c-t>"] = open_with_trouble },
+          n = { ["<c-t>"] = open_with_trouble },
+        },
+      },
+    })
   end,
 }
